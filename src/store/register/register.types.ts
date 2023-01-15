@@ -21,7 +21,7 @@ export type RegisterType = {
      */
     password: string
   }
-  token: Token
+  token: Token | null
 }
 
 export type EmailCheckResponse = {

@@ -24,10 +24,7 @@ const initialState: RegisterType = {
     passwordConfirm: '',
     memberName: '',
   },
-  token: {
-    accessToken: '',
-    refreshToken: '',
-  },
+  token: null,
 }
 type TargetChangeAction = PayloadAction<{
   name: keyof RegisterRequest
