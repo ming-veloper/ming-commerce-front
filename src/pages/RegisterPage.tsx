@@ -1,6 +1,6 @@
 //NAV BAR 만들기
 import { Alert, Button, Container, Form } from 'react-bootstrap'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../store'
 import {
@@ -9,7 +9,8 @@ import {
   reset,
   set,
 } from '../store/register/register.slice'
-import { useNavigate, useNavigation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { passwordCondition } from '../store/register/register.types'
 
 const RegisterPage = () => {
   const navigate = useNavigate()
@@ -18,22 +19,17 @@ const RegisterPage = () => {
     (state: RootState) => state.register,
   )
 
-  const [enable, setEnable] = useState(false)
-
   useEffect(() => {
     dispatch(reset())
   }, [dispatch])
 
-  useEffect(() => {
-    setEnable(
-      emailCheck === true &&
-        Object.values(registerRequest).every(
-          (value) => value !== null && value !== '',
-        ) &&
-        registerRequest.password === registerRequest.passwordConfirm &&
-        /^[A-Za-z0-9]{8,16}$/g.test(registerRequest.password),
-    )
-  }, [emailCheck, registerRequest])
+  const checked =
+    emailCheck === true &&
+    Object.values(registerRequest).every(
+      (value) => value !== null && value !== '',
+    ) &&
+    registerRequest.password === registerRequest.passwordConfirm &&
+    passwordCondition.test(registerRequest.password)
 
   const onChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = target
@@ -121,6 +117,13 @@ const RegisterPage = () => {
             onChange={onChange}
             placeholder="비밀번호를 입력해주세요."
           />
+          <Alert
+            show={errorMessage.password.length > 0}
+            className="small"
+            variant="danger"
+          >
+            {errorMessage.password}
+          </Alert>
           <Form.Text className="text-muted">
             비밀번호는 8글자 이상 16글자 미만으로 구성해주세요.
           </Form.Text>
@@ -135,6 +138,13 @@ const RegisterPage = () => {
             onChange={onChange}
             placeholder="비밀번호와 동일하게 입력해주세요."
           />
+          <Alert
+            show={errorMessage.passwordConfirm.length > 0}
+            className="small"
+            variant="danger"
+          >
+            {errorMessage.passwordConfirm}
+          </Alert>
           <Form.Text className="text-muted">
             비밀번호 확인은 비밀번호와 똑같이 입력해주세요.
           </Form.Text>
@@ -144,7 +154,7 @@ const RegisterPage = () => {
             <Button
               variant="primary"
               size="lg"
-              disabled={!enable}
+              disabled={!checked}
               onClick={onRegisterButtonClick}
             >
               가입하기

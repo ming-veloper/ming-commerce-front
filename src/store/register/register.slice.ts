@@ -6,9 +6,10 @@ import {
 } from '@reduxjs/toolkit'
 import {
   EmailCheckResponse,
+  passwordCondition,
   RegisterRequest,
-  Token,
   RegisterType,
+  Token,
 } from './register.types'
 import * as registerApi from '../../api/register.api'
 
@@ -16,6 +17,7 @@ const initialState: RegisterType = {
   errorMessage: {
     email: '',
     password: '',
+    passwordConfirm: '',
   },
   emailCheck: null,
   registerRequest: {
@@ -50,6 +52,19 @@ const registerSlice = createSlice({
     set: (state, action: TargetChangeAction) => {
       const { value, name } = action.payload
       state.registerRequest[name] = value
+      switch (name) {
+        case 'password':
+          state.errorMessage.password = passwordCondition.test(value)
+            ? ''
+            : '비밀번호를 8자 이상 16자 이하로 설정해주세요.'
+          break
+        case 'passwordConfirm':
+          state.errorMessage.passwordConfirm =
+            value === state.registerRequest.password
+              ? ''
+              : '비밀번호와 똑같이 설정해주세요.'
+          break
+      }
     },
     reset: (state) => {
       state = initialState
