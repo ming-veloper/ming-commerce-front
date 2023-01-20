@@ -28,11 +28,9 @@ export type RegisterType = {
   }
   token: Token | null
 }
-
 export type EmailCheckResponse = {
   isDuplicated: boolean
 }
-
 export type Token = {
   accessToken: string
   refreshToken: string
