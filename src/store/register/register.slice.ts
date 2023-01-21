@@ -39,7 +39,7 @@ export const checkEmail: AsyncThunk<EmailCheckResponse, string, any> =
     return response.data
   })
 
-export const registerUser: AsyncThunk<Token, RegisterRequest, any> =
+export const registerMember: AsyncThunk<Token, RegisterRequest, any> =
   createAsyncThunk('registerSlice/register', async (arg, thunkAPI) => {
     const response = await registerApi.register(arg)
     return response.data
@@ -83,16 +83,18 @@ const registerSlice = createSlice({
         state.errorMessage.email = ''
       }
     })
+
     builder.addCase(checkEmail.rejected, (state) => {
       state.errorMessage.email = '일시적인 서버 오류가 발생하였습니다.'
       state.emailCheck = false
     })
 
-    builder.addCase(registerUser.fulfilled, (state, action) => {
+    builder.addCase(registerMember.fulfilled, (state, action) => {
       state.token = action.payload
       localStorage.setItem('token', JSON.stringify(action.payload))
     })
-    builder.addCase(registerUser.rejected, (state, action) => {
+
+    builder.addCase(registerMember.rejected, (state, action) => {
       console.log('회원가입 실패')
       console.log(state, action)
     })

@@ -5,12 +5,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../store'
 import {
   checkEmail,
-  registerUser,
+  registerMember,
   reset,
   set,
 } from '../store/register/register.slice'
 import { useNavigate } from 'react-router-dom'
 import { passwordCondition } from '../store/register/register.types'
+import { getMemberInfo } from '../store/auth/auth.slice'
 
 const RegisterPage = () => {
   const navigate = useNavigate()
@@ -18,6 +19,8 @@ const RegisterPage = () => {
   const { registerRequest, emailCheck, errorMessage, token } = useSelector(
     (state: RootState) => state.register,
   )
+
+  const { memberInfo } = useSelector((state: RootState) => state.auth)
 
   useEffect(() => {
     dispatch(reset())
@@ -47,19 +50,20 @@ const RegisterPage = () => {
     console.log(registerRequest)
 
     // @ts-ignore
-    dispatch(registerUser(registerRequest))
+    dispatch(registerMember(registerRequest))
   }
 
   useEffect(() => {
     if (token) {
-      //TODO 가입 완료 후 로직.
-      // localStorage에 토큰까지 저장 완료.
-      // @yeonnex 님이 토큰을 사용하여 사용자 정보 조회 API 로직 만들면 추가 로직 필요.
+      // @ts-ignore
+      dispatch(getMemberInfo())
+    }
+    if (memberInfo) {
       navigate('/', {
         replace: true,
       })
     }
-  }, [navigate, token])
+  }, [dispatch, navigate, token, memberInfo])
 
   return (
     <Container style={{ marginTop: '20px' }}>
