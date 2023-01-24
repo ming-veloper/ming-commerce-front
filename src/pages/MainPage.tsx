@@ -1,25 +1,31 @@
-import { Link } from 'react-router-dom'
+import { Container } from 'react-bootstrap'
+import { useEffect } from 'react'
+import ProductList from '../api/ProductList'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../store'
+import { fetchProductList } from '../store/product/product.slice'
+import { ProductCategory } from '../store/product/product.types'
 
 const MainPage = () => {
+  const { productList, loading } = useSelector(
+    (state: RootState) => state.product,
+  )
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    // @ts-ignore
+    dispatch(
+      // @ts-ignore
+      fetchProductList({ category: ProductCategory.DAIRY_EGGS, page: 0 }),
+    )
+  }, [dispatch])
+
   return (
-    <div>
-      <h2>메인</h2>
-      <p>메인 페이지입니다.</p>
-      <ul>
-        <li>
-          <Link to="/login">로그인 페이지 링크 테스트</Link>
-        </li>
-        <li>
-          <Link to="/register">회원가입 페이지 링크 테스트</Link>
-        </li>
-        <li>
-          <Link to="/my-page">마이 페이지 링크 테스트</Link>
-        </li>
-        <li>
-          <Link to="/lost-password">lost-password 페이지 링크 테스트</Link>
-        </li>
-      </ul>
-    </div>
+    <Container>
+      <h2 className="h3 mb-0 pt-3 me-3">Bestsellers</h2>
+      <hr />
+      <ProductList loading={loading} productList={productList} />
+    </Container>
   )
 }
 
