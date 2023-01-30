@@ -9,7 +9,7 @@ import {
   reset,
   set,
 } from '../store/register/register.slice'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { passwordCondition } from '../store/register/register.types'
 import { getMemberInfo } from '../store/auth/auth.slice'
 
@@ -71,7 +71,6 @@ const RegisterPage = () => {
         <h1 className="display-5">회원가입</h1>
         <p className="fs-4">Ming! Commerce 의 회원이 되어주세요.</p>
       </div>
-
       <Form>
         <Form.Group className="mb-3">
           <Form.Label>이메일 주소</Form.Label>
@@ -166,6 +165,7 @@ const RegisterPage = () => {
           </div>
         </Form.Group>
       </Form>
+      이미 계정이 있으신가요? <Link to="/login">여기서</Link> 로그인하세요.
     </Container>
   )
 }

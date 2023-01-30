@@ -1,7 +1,7 @@
 import { Alert, Button, Container, Form } from 'react-bootstrap'
 import React, { useEffect, useReducer, useState } from 'react'
 import { login } from '../api/auth.api'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMemberInfo } from '../store/auth/auth.slice'
 import { RootState } from '../store'
@@ -69,7 +69,6 @@ const LoginPage = () => {
           Ming! Commerce 의 혜택을 누리시려면 로그인을 해주세요.
         </p>
       </div>
-
       <Form>
         <Form.Group className="mb-3">
           <Form.Label>이메일 주소</Form.Label>
@@ -112,6 +111,7 @@ const LoginPage = () => {
           </div>
         </Form.Group>
       </Form>
+      아직 계정이 없으신가요? <Link to="/register">여기서</Link> 회원가입하세요.
     </Container>
   )
 }
