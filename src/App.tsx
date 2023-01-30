@@ -5,14 +5,11 @@ import RegisterPage from './pages/RegisterPage'
 import LostPassword from './pages/LostPassword'
 import MyPage from './pages/MyPage'
 import MingNavBar from './components/MingNavBar'
-import { useSelector } from 'react-redux'
-import { RootState } from './store'
 
 const App = () => {
-  const { auth } = useSelector((state: RootState) => state)
   return (
     <Routes>
-      <Route element={<MingNavBar memberInfo={auth.memberInfo} />}>
+      <Route element={<MingNavBar />}>
         <Route index element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
