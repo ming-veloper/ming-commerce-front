@@ -11,6 +11,12 @@ const ProductCard: FC<ProductCardProp> = ({ product }) => {
     >
       <Card.Img
         variant="top"
+        style={{
+          width: 'auto',
+          height: 'auto',
+          maxHeight: '10rem',
+          maxWidth: '10rem',
+        }}
         src={product.thumbnailImageUrl}
         alt={product.productName}
       />

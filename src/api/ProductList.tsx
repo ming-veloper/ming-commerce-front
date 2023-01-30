@@ -43,7 +43,7 @@ const ProductList: FC<ProductListProp> = ({ productList, loading }) => {
   return (
     <div className="row mx-n2" style={{ justifyContent: 'center' }}>
       {productList.map((product) => (
-        <ProductCard product={product} key={product.uuid} />
+        <ProductCard product={product} key={product.productId} />
       ))}
     </div>
   )
