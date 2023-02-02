@@ -6,5 +6,15 @@ type GetAppCartResponse = {
   result: Array<CartProduct>
 }
 
+type CartActionResponse = {
+  cartLineCount: number
+}
+
 export const getAllCartList = (): Promise<AxiosResponse<GetAppCartResponse>> =>
   client.get('/api/carts')
+
+export const addCart = (request: {
+  productId: string
+  quantity: number
+}): Promise<AxiosResponse<CartActionResponse>> =>
+  client.post('/api/carts', request)

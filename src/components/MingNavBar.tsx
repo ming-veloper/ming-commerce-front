@@ -12,7 +12,7 @@ const navbarStyle: React.CSSProperties = {
 const MingNavBar: FC = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { cartList } = useSelector((state: RootState) => state.cart.list)
+  const { count } = useSelector((state: RootState) => state.cart)
   const { memberInfo } = useSelector((state: RootState) => state.auth)
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const MingNavBar: FC = () => {
               <Nav.Link className="navbar-tool ms-3 text-primary">
                 <div className="navbar-tool-icon-box bg-secondary">
                   {/*TODO 해당 숫자 증가 카트 추가 기능 구현 시에 구현 예정*/}
-                  <span className="navbar-tool-label">{cartList.length}</span>
+                  <span className="navbar-tool-label">{count}</span>
                   <i className="navbar-tool-icon ci-cart"></i>
                 </div>
               </Nav.Link>

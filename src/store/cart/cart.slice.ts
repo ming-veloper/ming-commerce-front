@@ -1,6 +1,6 @@
 import { AsyncThunk, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { CartProduct } from './cart.types'
-import { getAllCartList } from '../../api/cart.api'
+import { addCart, getAllCartList } from '../../api/cart.api'
 
 export const fetchAllCartList: AsyncThunk<
   Array<CartProduct>,
@@ -11,22 +11,46 @@ export const fetchAllCartList: AsyncThunk<
   return response.data.result
 })
 
+export const addCartAction: AsyncThunk<
+  { cartLineCount: number },
+  {
+    productId: string
+    quantity: number
+  },
+  any
+> = createAsyncThunk('cartSlice/addCart', async (arg, thunkAPI) => {
+  const response = await addCart(arg)
+  return response.data
+})
+
 const initialState: {
+  count: number
   list: {
     cartList: Array<CartProduct>
     loading: boolean
   }
+  add: {
+    success: boolean
+  }
 } = {
+  count: 0,
   list: {
     cartList: [],
     loading: true,
+  },
+  add: {
+    success: false,
   },
 }
 
 const cartSlice = createSlice({
   name: 'cartSlice',
   initialState,
-  reducers: {},
+  reducers: {
+    initSuccess: (state) => {
+      state.add.success = false
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchAllCartList.pending, (state) => {
       state.list.loading = true
@@ -38,8 +62,24 @@ const cartSlice = createSlice({
 
     builder.addCase(fetchAllCartList.fulfilled, (state, action) => {
       state.list.cartList = action.payload
+      state.count = action.payload.length
+    })
+
+    builder.addCase(addCartAction.pending, (state) => {
+      state.add.success = false
+    })
+
+    builder.addCase(addCartAction.rejected, (state) => {
+      state.add.success = false
+    })
+
+    builder.addCase(addCartAction.fulfilled, (state, action) => {
+      state.add.success = true
+      state.count = action.payload.cartLineCount
     })
   },
 })
 
 export default cartSlice.reducer
+
+export const { initSuccess } = cartSlice.actions
