@@ -1,7 +1,7 @@
 import { Alert, Button, Container, Form } from 'react-bootstrap'
 import React, { useEffect, useReducer, useState } from 'react'
 import { login } from '../api/auth.api'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { getMemberInfo } from '../store/auth/auth.slice'
 import { RootState } from '../store'
@@ -21,6 +21,8 @@ const loginReducer = (state: LoginRequest, action: LoginAction) => {
 }
 
 const LoginPage = () => {
+  const [searchParams] = useSearchParams()
+
   const navigate = useNavigate()
   const [errorMessage, setErrorMessage] = useState('')
   const dispatch = useDispatch()
@@ -32,7 +34,9 @@ const LoginPage = () => {
 
   // 이미 로그인 중인 상태에서 로그인 페이지 접근 못하게 처리
   useEffect(() => {
-    if (memberInfo) navigate('/', { replace: true })
+    if (memberInfo) {
+      navigate('/', { replace: true })
+    }
   }, [memberInfo, navigate])
 
   const checked =
@@ -53,7 +57,12 @@ const LoginPage = () => {
       localStorage.setItem('token', JSON.stringify(token))
       // @ts-ignore
       dispatch(getMemberInfo())
-      navigate('/', { replace: true })
+      const redirectUrl = searchParams.get('redirectUrl')
+      if (redirectUrl) {
+        window.location.href = redirectUrl
+      } else {
+        navigate('/', { replace: true })
+      }
     } catch (e) {
       setErrorMessage(
         '이메일 혹은 비밀번호가 올바르지 않습니다. 다시 시도해주세요.',

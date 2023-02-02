@@ -1,6 +1,6 @@
 import { Button, Container, Form, Spinner } from 'react-bootstrap'
-import { useParams } from 'react-router-dom'
-import React, { FC, useEffect } from 'react'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import React, { FC, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProductDetail, initDetail } from '../store/product/product.slice'
 import { RootState } from '../store'
@@ -11,6 +11,8 @@ const Section: FC<{ children: Array<JSX.Element> }> = ({ children }) => {
 
 const ProductDetailPage = () => {
   const { productId } = useParams<{ productId: string }>()
+  const navigate = useNavigate()
+  const [quantity, setQuantity] = useState(1)
   const dispatch = useDispatch()
   // @ts-ignore
   useEffect(() => {
@@ -23,6 +25,18 @@ const ProductDetailPage = () => {
   const { productDetail, loading } = useSelector(
     (state: RootState) => state.product.detail,
   )
+  const { memberInfo } = useSelector((state: RootState) => state.auth)
+
+  const onQuantityChange = ({
+    target,
+  }: React.ChangeEvent<HTMLSelectElement>) => {
+    setQuantity(Number(target.value))
+  }
+  const onAddCartClick = () => {
+    if (!memberInfo) {
+      navigate(`/login?redirectUrl=${window.location.href}`)
+    }
+  }
 
   if (loading) {
     return (
@@ -79,6 +93,8 @@ const ProductDetailPage = () => {
                 <Form.Select
                   className="mb-3 mb-3 me-1"
                   style={{ width: '5rem' }}
+                  value={quantity}
+                  onChange={onQuantityChange}
                 >
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -89,7 +105,7 @@ const ProductDetailPage = () => {
                 <Button
                   variant="primary"
                   className="btn-shadow me-3 mb-3"
-                  type="submit"
+                  onClick={onAddCartClick}
                 >
                   <i className="ci-cart fs-lg me-2"></i>Add to Cart
                 </Button>
