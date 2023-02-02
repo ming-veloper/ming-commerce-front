@@ -18,3 +18,10 @@ export const addCart = (request: {
   quantity: number
 }): Promise<AxiosResponse<CartActionResponse>> =>
   client.post('/api/carts', request)
+
+export const deleteCart = (request: {
+  productId: string
+}): Promise<AxiosResponse<CartActionResponse>> =>
+  client.delete('/api/carts', {
+    data: request,
+  })

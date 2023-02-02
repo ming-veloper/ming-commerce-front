@@ -1,6 +1,6 @@
 import { AsyncThunk, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { CartProduct } from './cart.types'
-import { addCart, getAllCartList } from '../../api/cart.api'
+import { addCart, deleteCart, getAllCartList } from '../../api/cart.api'
 
 export const fetchAllCartList: AsyncThunk<
   Array<CartProduct>,
@@ -23,10 +23,19 @@ export const addCartAction: AsyncThunk<
   return response.data
 })
 
+export const deleteCartAction: AsyncThunk<
+  { cartLineCount: number },
+  { productId: string },
+  any
+> = createAsyncThunk('cartSlice/deleteCart', async (arg, thunkAPI) => {
+  const response = await deleteCart(arg)
+  return response.data
+})
+
 const initialState: {
   count: number
   list: {
-    cartList: Array<CartProduct>
+    cartProductList: Array<CartProduct>
     loading: boolean
   }
   add: {
@@ -35,7 +44,7 @@ const initialState: {
 } = {
   count: 0,
   list: {
-    cartList: [],
+    cartProductList: [],
     loading: true,
   },
   add: {
@@ -61,7 +70,7 @@ const cartSlice = createSlice({
     })
 
     builder.addCase(fetchAllCartList.fulfilled, (state, action) => {
-      state.list.cartList = action.payload
+      state.list.cartProductList = action.payload
       state.count = action.payload.length
     })
 
@@ -75,6 +84,10 @@ const cartSlice = createSlice({
 
     builder.addCase(addCartAction.fulfilled, (state, action) => {
       state.add.success = true
+      state.count = action.payload.cartLineCount
+    })
+
+    builder.addCase(deleteCartAction.fulfilled, (state, action) => {
       state.count = action.payload.cartLineCount
     })
   },

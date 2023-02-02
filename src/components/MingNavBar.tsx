@@ -46,7 +46,12 @@ const MingNavBar: FC = () => {
                 </div>
               </Nav.Link>
 
-              <Nav.Link className="navbar-tool ms-3 text-primary">
+              <Nav.Link
+                className="navbar-tool ms-3 text-primary"
+                onClick={() => {
+                  navigate('/cart')
+                }}
+              >
                 <div className="navbar-tool-icon-box bg-secondary">
                   {/*TODO 해당 숫자 증가 카트 추가 기능 구현 시에 구현 예정*/}
                   <span className="navbar-tool-label">{count}</span>
