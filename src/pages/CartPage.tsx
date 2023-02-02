@@ -71,38 +71,48 @@ const CartPage = () => {
 
   return (
     <Container>
-      <div className="col-xl-5 offset-xl-1 mb-2">
-        <div className="bg-light rounded-3 py-5 px-4 px-xxl-5">
-          <h2 className="h5 pb-3">My Cart</h2>
-          {cartProductList.map((cartProduct) => (
-            <CartLine key={cartProduct.productId} cartProduct={cartProduct} />
-          ))}
-          <ul className="list-unstyled fs-sm pt-4 pb-2 border-bottom">
-            <li className="d-flex justify-content-between align-items-center">
-              <span className="me-2">합계:</span>
-              <span className="text-end fw-medium">${totalPrice}</span>
-            </li>
-            <li className="d-flex justify-content-between align-items-center">
-              <span className="me-2">배송비:</span>
-              <span className="text-end fw-medium">$3.00</span>
-            </li>
-          </ul>
-          <h3 className="fw-normal text-center my-4 py-2">
-            총 가격 : ${totalPrice + 3}
-          </h3>
+      {cartProductList.length > 0 ? (
+        <div className="col-xl-5 offset-xl-1 mb-2">
+          <div className="bg-light rounded-3 py-5 px-4 px-xxl-5">
+            <h2 className="h5 pb-3">My Cart</h2>
+            {cartProductList.map((cartProduct) => (
+              <CartLine key={cartProduct.productId} cartProduct={cartProduct} />
+            ))}
+            <ul className="list-unstyled fs-sm pt-4 pb-2 border-bottom">
+              <li className="d-flex justify-content-between align-items-center">
+                <span className="me-2">합계:</span>
+                <span className="text-end fw-medium">${totalPrice}</span>
+              </li>
+              <li className="d-flex justify-content-between align-items-center">
+                <span className="me-2">배송비:</span>
+                <span className="text-end fw-medium">$3.00</span>
+              </li>
+            </ul>
+            <h3 className="fw-normal text-center my-4 py-2">
+              총 가격 : ${totalPrice + 3}
+            </h3>
+          </div>
+          <div className="d-grid gap-2">
+            <Button
+              variant="primary"
+              size="lg"
+              onClick={() => {
+                alert('아직 준비중입니다~')
+              }}
+            >
+              주문하기
+            </Button>
+          </div>
         </div>
-        <div className="d-grid gap-2">
-          <Button
-            variant="primary"
-            size="lg"
-            onClick={() => {
-              alert('아직 준비중입니다~')
-            }}
-          >
-            주문하기
-          </Button>
-        </div>
-      </div>
+      ) : (
+        <>
+          <div className="col-xl-5 offset-xl-1 mb-2">
+            <div className="bg-light rounded-3 py-5 px-4 px-xxl-5">
+              <h3>아직 상품을 담지 않았어요...!</h3>
+            </div>
+          </div>
+        </>
+      )}
     </Container>
   )
 }
