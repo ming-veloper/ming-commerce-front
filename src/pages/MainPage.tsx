@@ -7,8 +7,8 @@ import { fetchProductList } from '../store/product/product.slice'
 import { ProductCategory } from '../store/product/product.types'
 
 const MainPage = () => {
-  const { productList, loading } = useSelector(
-    (state: RootState) => state.product,
+  const { loading, productList } = useSelector(
+    (state: RootState) => state.product.list,
   )
 
   const dispatch = useDispatch()
