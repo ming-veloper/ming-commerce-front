@@ -1,9 +1,10 @@
-import { Button, Container, Form, Spinner } from 'react-bootstrap'
-import { useParams } from 'react-router-dom'
-import React, { FC, useEffect } from 'react'
+import { Alert, Button, Container, Form, Spinner } from 'react-bootstrap'
+import { useNavigate, useParams } from 'react-router-dom'
+import React, { FC, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProductDetail, initDetail } from '../store/product/product.slice'
 import { RootState } from '../store'
+import { addCartAction, initSuccess } from '../store/cart/cart.slice'
 
 const Section: FC<{ children: Array<JSX.Element> }> = ({ children }) => {
   return <section className="row g-0 mx-n2 pb-5 mb-xl-3">{children}</section>
@@ -11,7 +12,15 @@ const Section: FC<{ children: Array<JSX.Element> }> = ({ children }) => {
 
 const ProductDetailPage = () => {
   const { productId } = useParams<{ productId: string }>()
+  const navigate = useNavigate()
+  const [quantity, setQuantity] = useState(1)
   const dispatch = useDispatch()
+  const { success } = useSelector((state: RootState) => state.cart.add)
+
+  useEffect(() => {
+    dispatch(initSuccess())
+  }, [dispatch])
+
   // @ts-ignore
   useEffect(() => {
     // @ts-ignore
@@ -23,6 +32,22 @@ const ProductDetailPage = () => {
   const { productDetail, loading } = useSelector(
     (state: RootState) => state.product.detail,
   )
+  const { memberInfo } = useSelector((state: RootState) => state.auth)
+
+  const onQuantityChange = ({
+    target,
+  }: React.ChangeEvent<HTMLSelectElement>) => {
+    setQuantity(Number(target.value))
+  }
+  const onAddCartClick = () => {
+    if (!memberInfo) {
+      navigate(`/login?redirectUrl=${window.location.href}`)
+      return
+    }
+
+    // @ts-ignore
+    dispatch(addCartAction({ productId, quantity }))
+  }
 
   if (loading) {
     return (
@@ -79,6 +104,8 @@ const ProductDetailPage = () => {
                 <Form.Select
                   className="mb-3 mb-3 me-1"
                   style={{ width: '5rem' }}
+                  value={quantity}
+                  onChange={onQuantityChange}
                 >
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -89,11 +116,14 @@ const ProductDetailPage = () => {
                 <Button
                   variant="primary"
                   className="btn-shadow me-3 mb-3"
-                  type="submit"
+                  onClick={onAddCartClick}
                 >
                   <i className="ci-cart fs-lg me-2"></i>Add to Cart
                 </Button>
               </div>
+              {success && (
+                <Alert variant="success">상품이 카트에 담겼습니다.</Alert>
+              )}
               <h6>상품 상세</h6>
               <ul className="list-unstyled fs-sm pt-2 mb-0">
                 <li>
