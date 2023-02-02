@@ -9,6 +9,11 @@ export type Product = {
   }
 }
 
+export type ProductDetail = Product & {
+  description: string
+  productImageUrlList: Array<string>
+}
+
 export enum ProductCategory {
   DAIRY_EGGS = 'DAIRY_EGGS',
 }

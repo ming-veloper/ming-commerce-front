@@ -1,13 +1,18 @@
 import { FC } from 'react'
 import { Card } from 'react-bootstrap'
 import { Product } from '../store/product/product.types'
+import { useNavigate } from 'react-router-dom'
 
 type ProductCardProp = { product: Product }
 const ProductCard: FC<ProductCardProp> = ({ product }) => {
+  const navigate = useNavigate()
   return (
     <Card
       className="product-card card-static shadow col-lg-4 col-5 px-0 px-sm-2 mb-sm-4"
       style={{ margin: '10px' }}
+      onClick={() => {
+        navigate(`/products/${product.productId}`)
+      }}
     >
       <Card.Img
         variant="top"

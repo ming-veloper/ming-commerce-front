@@ -5,6 +5,7 @@ import RegisterPage from './pages/RegisterPage'
 import LostPassword from './pages/LostPassword'
 import MyPage from './pages/MyPage'
 import MingNavBar from './components/MingNavBar'
+import ProductDetailPage from './pages/ProductDetailPage'
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/lost-password" element={<LostPassword />} />
         <Route path="/my-page" element={<MyPage />} />
+        <Route path="/products/:productId" element={<ProductDetailPage />} />
       </Route>
     </Routes>
   )
