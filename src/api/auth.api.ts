@@ -5,14 +5,10 @@ import client from './client'
 import { LoginRequest } from '../pages/LoginPage'
 
 const HEADER = 'X-WWW-MING-AUTHORIZATION'
-export const memberInfo = (
-  token: Token,
-): Promise<AxiosResponse<{ result: MemberInfo }>> => {
-  return client.get('/api/members/info', {
-    headers: {
-      [HEADER]: token.accessToken,
-    },
-  })
+export const memberInfo = (): Promise<
+  AxiosResponse<{ result: MemberInfo }>
+> => {
+  return client.get('/api/members/info')
 }
 
 export const login = (

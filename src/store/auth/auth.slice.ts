@@ -13,9 +13,7 @@ const initialState: { memberInfo: MemberInfo | null } = {
 export const getMemberInfo: AsyncThunk<MemberInfo, any, any> = createAsyncThunk(
   'registerSlice/memberInfo',
   async () => {
-    const token = localStorage.getItem('token')
-    if (!token) throw Error('No Token')
-    const response = await memberInfo(JSON.parse(token))
+    const response = await memberInfo()
     return response.data.result
   },
 )

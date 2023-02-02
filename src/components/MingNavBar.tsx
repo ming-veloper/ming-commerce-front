@@ -1,8 +1,9 @@
 import { Container, Nav, Navbar } from 'react-bootstrap'
 import { Outlet, useNavigate } from 'react-router-dom'
-import React, { FC } from 'react'
-import { useSelector } from 'react-redux'
+import React, { FC, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../store'
+import { fetchAllCartList } from '../store/cart/cart.slice'
 
 const navbarStyle: React.CSSProperties = {
   backdropFilter: 'blur(10px)',
@@ -10,8 +11,17 @@ const navbarStyle: React.CSSProperties = {
 }
 const MingNavBar: FC = () => {
   const navigate = useNavigate()
-
+  const dispatch = useDispatch()
+  const { cartList } = useSelector((state: RootState) => state.cart.list)
   const { memberInfo } = useSelector((state: RootState) => state.auth)
+
+  useEffect(() => {
+    if (memberInfo) {
+      // @ts-ignore
+      dispatch(fetchAllCartList())
+    }
+  }, [dispatch, memberInfo])
+
   return (
     <>
       <Navbar variant="black" className="sticky-top" style={navbarStyle}>
@@ -39,7 +49,7 @@ const MingNavBar: FC = () => {
               <Nav.Link className="navbar-tool ms-3 text-primary">
                 <div className="navbar-tool-icon-box bg-secondary">
                   {/*TODO 해당 숫자 증가 카트 추가 기능 구현 시에 구현 예정*/}
-                  <span className="navbar-tool-label">4</span>
+                  <span className="navbar-tool-label">{cartList.length}</span>
                   <i className="navbar-tool-icon ci-cart"></i>
                 </div>
               </Nav.Link>
