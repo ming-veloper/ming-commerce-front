@@ -8,6 +8,7 @@ import { deleteCartAction, fetchAllCartList } from '../store/cart/cart.slice'
 
 const CartLine: FC<{ cartProduct: CartProduct }> = ({ cartProduct }) => {
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const onDeleteClick = () => {
     // @ts-ignore
     dispatch(deleteCartAction({ productId: cartProduct.productId }))
@@ -18,7 +19,10 @@ const CartLine: FC<{ cartProduct: CartProduct }> = ({ cartProduct }) => {
   }
   return (
     <div className="d-flex align-items-center pb-2 border-bottom">
-      <a className="d-block flex-shrink-0" href="grocery-single.html">
+      <a
+        href={`/products/${cartProduct.productId}`}
+        className="d-block flex-shrink-0"
+      >
         <img
           src={cartProduct.thumbnailImageUrl}
           width="60"
@@ -27,7 +31,9 @@ const CartLine: FC<{ cartProduct: CartProduct }> = ({ cartProduct }) => {
       </a>
       <div className="ps-2 text-truncate">
         <h6 className="widget-product-title">
-          <a href="grocery-single.html">{cartProduct.productName}</a>
+          <a href={`/products/${cartProduct.productId}`}>
+            {cartProduct.productName}
+          </a>
         </h6>
         <div className="widget-product-meta">
           <span className="text-accent me-2">${cartProduct.price}</span>
