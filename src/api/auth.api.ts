@@ -4,7 +4,6 @@ import { MemberInfo } from '../store/auth/auth.types'
 import client from './client'
 import { LoginRequest } from '../pages/LoginPage'
 
-const HEADER = 'X-WWW-MING-AUTHORIZATION'
 export const memberInfo = (): Promise<
   AxiosResponse<{ result: MemberInfo }>
 > => {
