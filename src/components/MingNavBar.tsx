@@ -1,5 +1,5 @@
 import { Container, Nav, Navbar } from 'react-bootstrap'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import React, { FC, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../store'
@@ -14,13 +14,15 @@ const MingNavBar: FC = () => {
   const dispatch = useDispatch()
   const { count } = useSelector((state: RootState) => state.cart)
   const { memberInfo } = useSelector((state: RootState) => state.auth)
+  const location = useLocation()
 
   useEffect(() => {
-    if (memberInfo) {
+    if (memberInfo && location.pathname !== '/cart') {
+      // 로그인 한 상태이면서 '/cart' 로 시작하지 않는 경우에만 실행
       // @ts-ignore
       dispatch(fetchAllCartList())
     }
-  }, [dispatch, memberInfo])
+  }, [dispatch, location.pathname, memberInfo])
 
   return (
     <>

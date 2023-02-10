@@ -1,4 +1,5 @@
 export type CartProduct = {
+  uuid: string
   productId: string
   price: number
   quantity: number
