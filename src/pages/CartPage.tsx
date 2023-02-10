@@ -1,4 +1,4 @@
-import { Button, Card, Container, Image } from 'react-bootstrap'
+import { Alert, Button, Card, Container } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../store'
 import { useNavigate } from 'react-router-dom'
@@ -6,6 +6,20 @@ import { useEffect, useState } from 'react'
 import { deleteCartAction, fetchAllCartList } from '../store/cart/cart.slice'
 import CartLine from '../components/CartLine'
 import cartEmptyImage from '../cart_empty.png'
+import { loadTossPayments } from '@tosspayments/payment-sdk'
+import { order } from '../api/order.api'
+
+const changeUserAgent = () => {
+  Object.defineProperties(navigator, {
+    userAgent: {
+      get: () => `Ming Commerce Toss Payments`,
+    },
+  })
+}
+
+const getClientKey = (): string => {
+  return process.env.REACT_APP_TOSS_CLIENT_KEY as string
+}
 
 const CartPage = () => {
   const { memberInfo } = useSelector((state: RootState) => state.auth)
@@ -14,7 +28,6 @@ const CartPage = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [cartIdList, setCartIdList] = useState<Array<string>>([])
-
   const onClickCartLine = (cartLineId: string) => {
     if (cartIdList.includes(cartLineId)) {
       setCartIdList(cartIdList.filter((e) => e !== cartLineId))
@@ -48,9 +61,28 @@ const CartPage = () => {
         const value = current.price * current.quantity
         return value + accumulator
       }, 0)
-    setTotalPrice(Math.round(totalPrice))
+    setTotalPrice(totalPrice)
   }, [cartIdList, cartProductList])
 
+  const onClickOrder = async () => {
+    const clientKey = getClientKey()
+    const response = await order({
+      cartLineUuidList: cartIdList,
+    })
+
+    const orderResponse = response.data
+    changeUserAgent()
+    await loadTossPayments(clientKey).then((tossPayments) => {
+      tossPayments.requestPayment('토스페이', {
+        amount: orderResponse.amount * 1000,
+        orderId: orderResponse.orderId,
+        customerName: memberInfo?.memberName,
+        orderName: orderResponse.orderName,
+        successUrl: `${window.location.origin}/order_redirect`,
+        failUrl: `${window.location.origin}/order_redirect`,
+      })
+    })
+  }
   return (
     <Container>
       {cartProductList.length > 0 ? (
@@ -72,13 +104,9 @@ const CartPage = () => {
                     <span className="me-2">합계:</span>
                     <span className="text-end fw-medium">${totalPrice}</span>
                   </li>
-                  <li className="d-flex justify-content-between align-items-center">
-                    <span className="me-2">배송비:</span>
-                    <span className="text-end fw-medium">$3.00</span>
-                  </li>
                 </ul>
                 <h3 className="fw-normal text-center my-4 py-2">
-                  총 가격 : ${totalPrice + 3}
+                  총 가격 : ${totalPrice}
                 </h3>
               </>
             )}
@@ -87,13 +115,16 @@ const CartPage = () => {
             <Button
               variant="primary"
               size="lg"
-              onClick={() => {
-                alert('아직 준비중입니다~')
-              }}
+              onClick={onClickOrder}
               disabled={cartIdList.length === 0}
             >
-              주문하기
+              {cartIdList.length > 0
+                ? `Toss로 ${totalPrice * 1000}원 결제하기`
+                : 'Toss로 결제하기'}
             </Button>
+            {cartIdList.length > 0 && (
+              <Alert variant="danger">⚠️실제로 결제가 되지 않습니다.</Alert>
+            )}
           </div>
         </div>
       ) : (

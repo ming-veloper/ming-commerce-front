@@ -7,6 +7,7 @@ import MyPage from './pages/MyPage'
 import MingNavBar from './components/MingNavBar'
 import ProductDetailPage from './pages/ProductDetailPage'
 import CartPage from './pages/CartPage'
+import OrderRedirectPage from './pages/OrderRedirectPage'
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/products/:productId" element={<ProductDetailPage />} />
         <Route path="/cart" element={<CartPage />} />
       </Route>
+      <Route path="/order_redirect" element={<OrderRedirectPage />} />
     </Routes>
   )
 }
