@@ -26,7 +26,11 @@ const MingNavBar: FC = () => {
 
   return (
     <>
-      <Navbar variant="black" className="sticky-top" style={navbarStyle}>
+      <Navbar
+        variant="black"
+        className="sticky-top ming-navbar"
+        style={navbarStyle}
+      >
         <Container>
           <Navbar.Brand onClick={() => navigate('/')} className="text-primary">
             Ming!
