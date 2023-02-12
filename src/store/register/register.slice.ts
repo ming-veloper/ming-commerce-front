@@ -67,7 +67,8 @@ const registerSlice = createSlice({
       }
     },
     reset: (state) => {
-      state = initialState
+      state.registerRequest = initialState.registerRequest
+      state.emailCheck = false
     },
   },
 

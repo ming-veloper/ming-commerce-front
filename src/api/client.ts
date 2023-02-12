@@ -2,7 +2,10 @@ import axios from 'axios'
 import { Token } from '../store/register/register.types'
 
 const HEADER = 'X-WWW-MING-AUTHORIZATION'
-const client = axios.create()
+const client = axios.create({
+  baseURL:
+    'http://prod-ming-commerce-api-service.ap-northeast-2.elasticbeanstalk.com/',
+})
 
 client.interceptors.request.use((config) => {
   if (!config.headers) return config

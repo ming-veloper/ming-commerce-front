@@ -36,4 +36,4 @@ export type Token = {
   refreshToken: string
 }
 
-export const passwordCondition = /^[A-Za-z0-9(?=.*\d)[$@!%&]{8,16}$/g
+export const passwordCondition = /^[A-Za-z0-9(?=.*\d)[$@!%&]{8,16}$/
