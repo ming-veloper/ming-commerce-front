@@ -57,14 +57,15 @@ const CartPage = () => {
   useEffect(() => {
     const totalPrice = cartProductList
       .filter((e) => cartIdList.includes(e.uuid))
+      .map((e) => e.price * e.quantity)
       .reduce((accumulator, current) => {
-        const value = current.price * current.quantity
-        return value + accumulator
+        return current + accumulator
       }, 0)
-    setTotalPrice(totalPrice)
+    setTotalPrice(Number(totalPrice.toFixed(2)))
   }, [cartIdList, cartProductList])
 
   const onClickOrder = async () => {
+    if (!memberInfo) return
     const clientKey = getClientKey()
     const response = await order({
       cartLineUuidList: cartIdList,
@@ -76,8 +77,9 @@ const CartPage = () => {
       tossPayments.requestPayment('토스페이', {
         amount: orderResponse.amount * 1000,
         orderId: orderResponse.orderId,
-        customerName: memberInfo?.memberName,
+        customerName: memberInfo.memberName,
         orderName: orderResponse.orderName,
+        customerEmail: memberInfo.email,
         successUrl: `${window.location.origin}/order_redirect`,
         failUrl: `${window.location.origin}/order_redirect`,
       })
@@ -119,7 +121,9 @@ const CartPage = () => {
               disabled={cartIdList.length === 0}
             >
               {cartIdList.length > 0
-                ? `Toss로 ${totalPrice * 1000}원 결제하기`
+                ? `Toss로 ${(totalPrice * 1000).toLocaleString(
+                    'ko-KR',
+                  )}원 결제하기`
                 : 'Toss로 결제하기'}
             </Button>
             {cartIdList.length > 0 && (
