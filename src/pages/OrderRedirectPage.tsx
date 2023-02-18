@@ -1,14 +1,22 @@
 import { useSearchParams } from 'react-router-dom'
 import { Col, Container, Row, Spinner } from 'react-bootstrap'
+import { useEffect } from 'react'
+import { payment } from '../api/payment.api'
 
 const OrderRedirectPage = () => {
   const [searchParams] = useSearchParams()
   const orderId = searchParams.get('orderId') as string
   const paymentKey = searchParams.get('paymentKey') as string
   const amount = Number(searchParams.get('amount'))
-  console.log(orderId)
-  console.log(paymentKey)
-  console.log(amount)
+  useEffect(() => {
+    ;(async () => {
+      if (orderId && paymentKey && amount) {
+        const paymentResponse = await payment({ orderId, paymentKey, amount })
+        const data = paymentResponse.data
+        console.log(data)
+      }
+    })()
+  }, [orderId, paymentKey, amount])
   return (
     <Container fluid="md">
       <Row className="justify-content-center">
