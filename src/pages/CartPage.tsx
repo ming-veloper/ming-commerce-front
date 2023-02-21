@@ -75,7 +75,7 @@ const CartPage = () => {
     changeUserAgent()
     await loadTossPayments(clientKey).then((tossPayments) => {
       tossPayments.requestPayment('토스페이', {
-        amount: orderResponse.amount * 1000,
+        amount: orderResponse.amount,
         orderId: orderResponse.orderId,
         customerName: memberInfo.memberName,
         orderName: orderResponse.orderName,
