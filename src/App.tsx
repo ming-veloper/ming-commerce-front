@@ -8,6 +8,7 @@ import MingNavBar from './components/MingNavBar'
 import ProductDetailPage from './pages/ProductDetailPage'
 import CartPage from './pages/CartPage'
 import OrderRedirectPage from './pages/OrderRedirectPage'
+import OrderCompletePage from './pages/OrderCompletePage'
 
 const App = () => {
   return (
@@ -18,6 +19,9 @@ const App = () => {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/lost-password" element={<LostPassword />} />
         <Route path="/my-page" element={<MyPage />} />
+        <Route path="/my-page">
+          <Route path="order/:orderId" element={<OrderCompletePage />} />
+        </Route>
         <Route path="/products/:productId" element={<ProductDetailPage />} />
         <Route path="/cart" element={<CartPage />} />
       </Route>
