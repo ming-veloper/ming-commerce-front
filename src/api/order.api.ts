@@ -1,13 +1,12 @@
-import { OrderRequest, OrderResponse } from '../store/order/order.types'
+import {
+  MyOrderWrapper,
+  OrderRequest,
+  OrderResponse,
+  OrderResult,
+} from '../store/order/order.types'
 import client from './client'
 import { AxiosResponse } from 'axios'
 
-export type OrderResult = {
-  orderId: string
-  amount: number
-  orderName: string
-  orderStatus: string
-}
 export const order = (
   request: OrderRequest,
 ): Promise<AxiosResponse<OrderResponse>> => {
@@ -22,4 +21,11 @@ export const getOrder = (
       orderId,
     },
   })
+}
+
+export const getMyOrder = (
+  page: number,
+  size: number,
+): Promise<AxiosResponse<MyOrderWrapper>> => {
+  return client.get(`/api/orders/my-order?page=${page - 1}&size=${size}`)
 }
