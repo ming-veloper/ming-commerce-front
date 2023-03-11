@@ -13,6 +13,7 @@ export type MyOrder = {
   orderName: string
   thumbnailImageUrl: string
   totalAmount: number
+  updatedDate: string
 }
 export type MyOrderWrapper = {
   content: Array<MyOrder>
