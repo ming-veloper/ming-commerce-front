@@ -1,6 +1,8 @@
 import { FC } from 'react'
 import { MyOrder } from '../store/order/order.types'
 import { Card, Col, Row } from 'react-bootstrap'
+import moment from 'moment'
+import 'moment/locale/ko'
 
 export const MyOrderCard: FC<{ order: MyOrder }> = ({ order }) => {
   return (
@@ -23,6 +25,9 @@ export const MyOrderCard: FC<{ order: MyOrder }> = ({ order }) => {
         </Col>
         <Col className="me-4" style={{ fontSize: 'small' }}>
           <Row>{order.orderName}</Row>
+          <Row className="text-accent justify-content-end">
+            {moment(order.updatedDate).fromNow()} 주문
+          </Row>
           <Row className="text-primary justify-content-end">
             {order.totalAmount.toLocaleString()}원
           </Row>
