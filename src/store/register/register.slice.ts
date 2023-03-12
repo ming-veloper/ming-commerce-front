@@ -78,7 +78,7 @@ const registerSlice = createSlice({
       // 이미 중복 되었으면
       if (isDuplicated) {
         state.emailCheck = false
-        state.errorMessage.email = `${state.registerRequest.email}은 이미 사용중인 이메일입니다.`
+        state.errorMessage.email = `이미 사용중인 이메일입니다.`
       } else {
         state.emailCheck = true
         state.errorMessage.email = ''

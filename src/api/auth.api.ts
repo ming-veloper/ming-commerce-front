@@ -15,3 +15,7 @@ export const login = (
 ): Promise<AxiosResponse<Token>> => {
   return client.post('/api/login', loginRequest)
 }
+
+export const sendEmail = (request: { email: string }) => {
+  return client.post('/api/members/send-email', request)
+}
