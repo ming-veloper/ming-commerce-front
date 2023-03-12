@@ -26,7 +26,7 @@ export const MyOrderCard: FC<{ order: MyOrder }> = ({ order }) => {
         <Col className="me-4" style={{ fontSize: 'small' }}>
           <Row>{order.orderName}</Row>
           <Row className="text-accent justify-content-end">
-            {moment(order.updatedDate).fromNow()} 주문
+            {moment(order.updatedDate).utc(true).fromNow()} 주문
           </Row>
           <Row className="text-primary justify-content-end">
             {order.totalAmount.toLocaleString()}원

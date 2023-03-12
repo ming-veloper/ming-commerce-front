@@ -27,5 +27,7 @@ export const getMyOrder = (
   page: number,
   size: number,
 ): Promise<AxiosResponse<MyOrderWrapper>> => {
-  return client.get(`/api/orders/my-order?page=${page - 1}&size=${size}`)
+  return client.get(
+    `/api/orders/my-order?page=${page - 1}&size=${size}&sort=modifiedDate,desc`,
+  )
 }
