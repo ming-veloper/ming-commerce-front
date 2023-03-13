@@ -16,6 +16,8 @@ import { MyOrder } from '../store/order/order.types'
 import MyOrderList from '../components/MyOrderList'
 import { checkEmail, reset } from '../store/register/register.slice'
 import { sendEmail } from '../api/auth.api'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { AxiosError } from 'axios'
 
 const MY_ORDER_SIZE = 5
 const MyPage = () => {
@@ -30,6 +32,8 @@ const MyPage = () => {
   )
   const [email, setEmail] = useState('')
   const [sendSuccess, setSendSuccess] = useState(false)
+  const [sendFail, setSendFail] = useState(false)
+  const [sendFailMessage, setSendFailMessage] = useState('')
   useEffect(() => {
     dispatch(reset())
   }, [dispatch])
@@ -70,8 +74,19 @@ const MyPage = () => {
   }
 
   const onClickChangeEmail = async () => {
-    const response = await sendEmail({ email })
-    if (response.status === 200) setSendSuccess(true)
+    try {
+      const response = await sendEmail({ email })
+      if (response.status === 200) {
+        setSendSuccess(true)
+        setSendFail(false)
+      }
+      // @ts-ignore
+    } catch (err: AxiosError) {
+      const { message } = err.response.data
+      setSendFailMessage(message)
+      setSendSuccess(false)
+      setSendFail(true)
+    }
   }
 
   return (
@@ -108,6 +123,9 @@ const MyPage = () => {
             </Alert>
             <Alert className="small" show={sendSuccess} variant="info">
               {email} 로 인증 메일을 보냈습니다.
+            </Alert>
+            <Alert className="small" show={sendFail} variant="danger">
+              {sendFailMessage}
             </Alert>
           </Form.Group>
           <Form.Group className="mb-3">
