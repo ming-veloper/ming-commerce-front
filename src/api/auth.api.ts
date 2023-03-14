@@ -19,3 +19,12 @@ export const login = (
 export const sendEmail = (request: { email: string }) => {
   return client.post('/api/members/send-email', request)
 }
+
+export const changeEmail = (request: {
+  email: string
+  token: string
+}): Promise<AxiosResponse<Token>> => {
+  return client.get(
+    `/api/members/change-email?token=${request.token}&email=${request.email}`,
+  )
+}
