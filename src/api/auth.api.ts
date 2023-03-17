@@ -21,10 +21,7 @@ export const sendEmail = (request: { email: string }) => {
 }
 
 export const changeEmail = (request: {
-  email: string
   token: string
 }): Promise<AxiosResponse<Token>> => {
-  return client.get(
-    `/api/members/change-email?token=${request.token}&email=${request.email}`,
-  )
+  return client.get(`/api/members/change-email?token=${request.token}`)
 }

@@ -8,33 +8,30 @@ import { useDispatch } from 'react-redux'
 const UserUpdateLinkPage: FC = () => {
   const [searchParams] = useSearchParams()
   const [token, setToken] = useState<string | undefined | null>('')
-  const [email, setEmail] = useState<string | undefined | null>('')
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
   useEffect(() => {
     const token = searchParams.get('token') as string
-    const email = searchParams.get('email') as string
     setToken(token)
-    setEmail(email)
-    console.log(token, email)
+    console.log(token)
   }, [searchParams])
 
   useEffect(() => {
-    if (!token || !email) return
-    changeEmail({ email, token })
+    if (!token) return
+    changeEmail({ token })
       .then((response) => response.data)
       .then((token) => {
         localStorage.setItem('token', JSON.stringify(token))
         // @ts-ignore
         dispatch(getMemberInfo())
-        localStorage.setItem('message', `이메일이 ${email}로 변경되었습니다.`)
+        localStorage.setItem('message', `이메일이 성공적으로 변경되었습니다.`)
         navigate('/', { replace: true })
       })
       .catch((err) => {
         console.error(err)
       })
-  }, [token, email, navigate])
+  }, [token, navigate, dispatch])
 
   return (
     <Container>
