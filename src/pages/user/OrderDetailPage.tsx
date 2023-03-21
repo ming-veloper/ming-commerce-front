@@ -10,7 +10,7 @@ const ProductDetailElement: FC<{
   productDetail: OrderProductDetail
 }> = ({ productDetail }) => {
   return (
-    <div className="d-flex align-items-center pb-2 border-bottom">
+    <div className="d-flex align-items-center pb-3 pt-3 border-bottom">
       <span className="d-block flex-shrink-0">
         <img src={productDetail.thumbnailImageUrl} width="64" alt="Product" />
       </span>
