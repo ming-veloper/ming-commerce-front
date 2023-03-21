@@ -1,7 +1,7 @@
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { Col, Container, Row, Spinner } from 'react-bootstrap'
 import { useEffect } from 'react'
-import { payment } from '../api/payment.api'
+import { payment } from '../../api/payment.api'
 
 const OrderRedirectPage = () => {
   const [searchParams] = useSearchParams()
@@ -15,7 +15,7 @@ const OrderRedirectPage = () => {
         const paymentResponse = await payment({ orderId, paymentKey, amount })
         const data = paymentResponse.data
         console.log(data)
-        navigate(`/my-page/order/${data.orderId}`)
+        navigate(`/my-page/order/result/${data.orderId}`)
       }
     })()
   }, [orderId, paymentKey, amount, navigate])

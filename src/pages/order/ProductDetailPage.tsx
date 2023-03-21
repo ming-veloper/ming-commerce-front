@@ -2,9 +2,12 @@ import { Alert, Button, Container, Form, Spinner } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
 import React, { FC, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchProductDetail, initDetail } from '../store/product/product.slice'
-import { RootState } from '../store'
-import { addCartAction, initSuccess } from '../store/cart/cart.slice'
+import {
+  fetchProductDetail,
+  initDetail,
+} from '../../store/product/product.slice'
+import { RootState } from '../../store'
+import { addCartAction, initSuccess } from '../../store/cart/cart.slice'
 
 const Section: FC<{ children: Array<JSX.Element> }> = ({ children }) => {
   return <section className="row g-0 mx-n2 pb-5 mb-xl-3">{children}</section>
@@ -93,7 +96,7 @@ const ProductDetailPage = () => {
           </div>
           <div className="col-xl-5 px-2 mb-3">
             <div className="h-100 bg-light rounded-3 py-5 px-4 px-sm-5">
-              <a className="product-meta d-block fs-sm pb-2" href="#">
+              <a className="product-meta d-block fs-sm pb-2" href="src/pages#">
                 {productDetail.category.categoryName}
               </a>
               <h1 className="h2">{productDetail.productName}</h1>

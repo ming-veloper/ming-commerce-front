@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../store'
+import { RootState } from '../../store'
 import {
   Alert,
   Button,
@@ -11,11 +11,11 @@ import {
 } from 'react-bootstrap'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getMyOrderList } from '../api/order.api'
-import { MyOrder } from '../store/order/order.types'
-import MyOrderList from '../components/MyOrderList'
-import { checkEmail, reset } from '../store/register/register.slice'
-import { sendEmail } from '../api/auth.api'
+import { getMyOrderList } from '../../api/order.api'
+import { MyOrder } from '../../store/order/order.types'
+import MyOrderList from '../../components/MyOrderList'
+import { checkEmail, reset } from '../../store/register/register.slice'
+import { sendEmail } from '../../api/auth.api'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { AxiosError } from 'axios'
 

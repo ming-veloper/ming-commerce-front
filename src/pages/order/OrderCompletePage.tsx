@@ -1,8 +1,8 @@
 import { Card, Container, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { getOrder } from '../api/order.api'
-import { OrderResult } from '../store/order/order.types'
+import { getOrder } from '../../api/order.api'
+import { OrderResult } from '../../store/order/order.types'
 
 const OrderCompletePage = () => {
   const { orderId } = useParams<{ orderId: string }>()

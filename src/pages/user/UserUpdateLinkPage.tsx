@@ -1,8 +1,8 @@
 import { Container } from 'react-bootstrap'
 import { FC, useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { changeEmail } from '../api/auth.api'
-import { getMemberInfo } from '../store/auth/auth.slice'
+import { changeEmail } from '../../api/auth.api'
+import { getMemberInfo } from '../../store/auth/auth.slice'
 import { useDispatch } from 'react-redux'
 
 const UserUpdateLinkPage: FC = () => {
