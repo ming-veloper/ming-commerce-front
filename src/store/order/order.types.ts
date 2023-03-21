@@ -15,8 +15,8 @@ export type MyOrder = {
   totalAmount: number
   updatedDate: string
 }
-export type MyOrderWrapper = {
-  content: Array<MyOrder>
+export type PagingObject<T> = {
+  content: Array<T>
   first: boolean
   last: boolean
   totalElements: number

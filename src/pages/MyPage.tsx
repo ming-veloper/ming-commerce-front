@@ -11,7 +11,7 @@ import {
 } from 'react-bootstrap'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getMyOrder } from '../api/order.api'
+import { getMyOrderList } from '../api/order.api'
 import { MyOrder } from '../store/order/order.types'
 import MyOrderList from '../components/MyOrderList'
 import { checkEmail, reset } from '../store/register/register.slice'
@@ -41,7 +41,7 @@ const MyPage = () => {
     if (!memberInfo) {
       navigate('/', { replace: true })
     }
-    getMyOrder(1, MY_ORDER_SIZE)
+    getMyOrderList(1, MY_ORDER_SIZE)
       .then((response) => response.data)
       .then((result) => {
         setMyOrderList(result.content)
@@ -58,7 +58,7 @@ const MyPage = () => {
   const onClickMoreOrders = async () => {
     const nextPage = page + 1
     setPage(nextPage)
-    const response = await getMyOrder(nextPage, MY_ORDER_SIZE)
+    const response = await getMyOrderList(nextPage, MY_ORDER_SIZE)
     const nextMyOrders = response.data
     setMyOrderList([...myOrderList, ...nextMyOrders.content])
     setIsLast(nextMyOrders.last)
