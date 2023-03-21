@@ -1,10 +1,10 @@
 import { Alert, Button, Container, Form } from 'react-bootstrap'
 import React, { useEffect, useReducer, useState } from 'react'
-import { login } from '../api/auth.api'
+import { login } from '../../api/auth.api'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { getMemberInfo } from '../store/auth/auth.slice'
-import { RootState } from '../store'
+import { getMemberInfo } from '../../store/auth/auth.slice'
+import { RootState } from '../../store'
 
 export interface LoginRequest {
   email: string

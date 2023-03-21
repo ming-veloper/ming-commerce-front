@@ -15,8 +15,8 @@ export type MyOrder = {
   totalAmount: number
   updatedDate: string
 }
-export type MyOrderWrapper = {
-  content: Array<MyOrder>
+export type PagingObject<T> = {
+  content: Array<T>
   first: boolean
   last: boolean
   totalElements: number
@@ -28,4 +28,18 @@ export type OrderResult = {
   amount: number
   orderName: string
   orderStatus: string
+}
+
+export type OrderProductDetail = {
+  productId: string
+  productName: string
+  thumbnailImageUrl: string
+  price: number
+  quantity: number
+}
+export type OrderDetail = {
+  orderName: string
+  totalAmount: number
+  createdDate: string
+  productDetailList: Array<OrderProductDetail>
 }

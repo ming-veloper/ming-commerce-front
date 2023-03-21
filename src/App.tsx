@@ -1,15 +1,16 @@
 import { Route, Routes } from 'react-router-dom'
 import MainPage from './pages/MainPage'
-import LoginPage from './pages/LoginPage'
-import RegisterPage from './pages/RegisterPage'
-import LostPassword from './pages/LostPassword'
-import MyPage from './pages/MyPage'
+import LoginPage from './pages/login/LoginPage'
+import RegisterPage from './pages/login/RegisterPage'
+import LostPassword from './pages/login/LostPassword'
+import MyPage from './pages/user/MyPage'
 import MingNavBar from './components/MingNavBar'
-import ProductDetailPage from './pages/ProductDetailPage'
-import CartPage from './pages/CartPage'
-import OrderRedirectPage from './pages/OrderRedirectPage'
-import OrderCompletePage from './pages/OrderCompletePage'
-import UserUpdateLinkPage from './pages/UserUpdateLinkPage'
+import ProductDetailPage from './pages/order/ProductDetailPage'
+import CartPage from './pages/user/CartPage'
+import OrderRedirectPage from './pages/order/OrderRedirectPage'
+import OrderCompletePage from './pages/order/OrderCompletePage'
+import UserUpdateLinkPage from './pages/user/UserUpdateLinkPage'
+import OrderDetailPage from './pages/user/OrderDetailPage'
 
 const App = () => {
   return (
@@ -21,7 +22,8 @@ const App = () => {
         <Route path="/lost-password" element={<LostPassword />} />
         <Route path="/my-page" element={<MyPage />} />
         <Route path="/my-page">
-          <Route path="order/:orderId" element={<OrderCompletePage />} />
+          <Route path="order/result/:orderId" element={<OrderCompletePage />} />
+          <Route path="order/detail/:orderId" element={<OrderDetailPage />} />
         </Route>
         <Route path="/products/:productId" element={<ProductDetailPage />} />
         <Route path="/cart" element={<CartPage />} />

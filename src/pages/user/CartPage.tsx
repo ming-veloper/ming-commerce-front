@@ -1,13 +1,13 @@
 import { Alert, Button, Card, Container } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../store'
+import { RootState } from '../../store'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import { deleteCartAction, fetchAllCartList } from '../store/cart/cart.slice'
-import CartLine from '../components/CartLine'
-import cartEmptyImage from '../cart_empty.png'
+import { deleteCartAction, fetchAllCartList } from '../../store/cart/cart.slice'
+import CartLine from '../../components/CartLine'
+import cartEmptyImage from '../../cart_empty.png'
 import { loadTossPayments } from '@tosspayments/payment-sdk'
-import { order } from '../api/order.api'
+import { order } from '../../api/order.api'
 
 const changeUserAgent = () => {
   Object.defineProperties(navigator, {

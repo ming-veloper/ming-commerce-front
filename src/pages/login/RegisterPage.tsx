@@ -2,16 +2,16 @@
 import { Alert, Button, Container, Form } from 'react-bootstrap'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../store'
+import { RootState } from '../../store'
 import {
   checkEmail,
   registerMember,
   reset,
   set,
-} from '../store/register/register.slice'
+} from '../../store/register/register.slice'
 import { Link, useNavigate } from 'react-router-dom'
-import { passwordCondition } from '../store/register/register.types'
-import { getMemberInfo } from '../store/auth/auth.slice'
+import { passwordCondition } from '../../store/register/register.types'
+import { getMemberInfo } from '../../store/auth/auth.slice'
 
 const RegisterPage = () => {
   const navigate = useNavigate()

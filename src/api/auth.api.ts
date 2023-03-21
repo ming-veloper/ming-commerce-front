@@ -2,7 +2,7 @@ import { Token } from '../store/register/register.types'
 import { AxiosResponse } from 'axios'
 import { MemberInfo } from '../store/auth/auth.types'
 import client from './client'
-import { LoginRequest } from '../pages/LoginPage'
+import { LoginRequest } from '../pages/login/LoginPage'
 
 export const memberInfo = (): Promise<
   AxiosResponse<{ result: MemberInfo }>
