@@ -1,9 +1,10 @@
 import {
-  PagingObject,
+  MyOrder,
+  OrderDetail,
   OrderRequest,
   OrderResponse,
   OrderResult,
-  MyOrder,
+  PagingObject,
 } from '../store/order/order.types'
 import client from './client'
 import { AxiosResponse } from 'axios'
@@ -31,4 +32,10 @@ export const getMyOrderList = (
   return client.get(
     `/api/orders/my-order?page=${page - 1}&size=${size}&sort=modifiedDate,desc`,
   )
+}
+
+export const getMyOrderDetail = (
+  orderId: string,
+): Promise<AxiosResponse<OrderDetail>> => {
+  return client.get(`/api/orders/order-detail?orderId=${orderId}`)
 }

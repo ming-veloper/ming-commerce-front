@@ -29,3 +29,17 @@ export type OrderResult = {
   orderName: string
   orderStatus: string
 }
+
+export type OrderProductDetail = {
+  productId: string
+  productName: string
+  thumbnailImageUrl: string
+  price: number
+  quantity: number
+}
+export type OrderDetail = {
+  orderName: string
+  totalAmount: number
+  createdDate: string
+  productDetailList: Array<OrderProductDetail>
+}

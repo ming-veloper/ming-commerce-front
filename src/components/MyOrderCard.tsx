@@ -4,11 +4,15 @@ import { Card, Col, Row } from 'react-bootstrap'
 import moment from 'moment'
 import 'moment/locale/ko'
 
-export const MyOrderCard: FC<{ order: MyOrder }> = ({ order }) => {
+export const MyOrderCard: FC<{ order: MyOrder; onClick: () => void }> = ({
+  order,
+  onClick,
+}) => {
   return (
     <Card
       className="product-card card-static shadow"
       style={{ margin: '10px' }}
+      onClick={onClick}
     >
       <Row>
         <Col xs={3}>
